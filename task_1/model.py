@@ -16,8 +16,10 @@ class SimpleFC:
         self.keep_prob = None
         self.loss = None
         self.optimizer = None
-        self.accuracy = None
+        self.mse_loss = None
         self.prediction = None
+
+        self.prediction_class = None
 
     def build_model(self):
 
@@ -29,11 +31,12 @@ class SimpleFC:
 
         prediction = self.network(self.x)
         self.prediction = tf.identity(tf.nn.softmax(prediction), 'prediction')
+        self.prediction_class = tf.argmax(prediction, axis=1)
 
         self.loss = self.est_loss(self.y, prediction)
 
         self.optimizer = self.optimize(self.loss)
-        self.accuracy = self.est_mse(self.y, prediction)
+        self.mse_loss = self.est_mse(self.y, prediction)
 
     def network(self, inp):
 
