@@ -13,6 +13,7 @@ class Dataset:
         self.test_set = None
 
         self.num_classes = 0
+        self.test_part = 0.2
 
     def create_ds(self):
 
@@ -37,6 +38,19 @@ class Dataset:
         all_labels = self.dense_to_one_hot(all_labels, self.num_classes)
 
         return all_ex, all_labels
+
+    def split_train_test_set(self):
+        all_ex, all_labels = self.create_ds()
+        num_ex = all_ex.shape[0]
+
+        perm = np.arange(num_ex)
+        np.random.shuffle(perm)
+        x = all_ex[perm]
+        y = all_labels[perm]
+
+        bound_idx = int(num_ex * (1 - self.test_part))
+
+        return x[:bound_idx, :], y[:bound_idx, :], x[bound_idx:, :], y[bound_idx:, :]
 
     def normalize(self, data):
         return data * 1/256
