@@ -56,6 +56,7 @@ class Dataset:
                 feats_row = row[1:1 + self.num_feats]
 
                 curr_idx = 1 + self.num_feats
+
                 for i in range(self.cat_feats):
                     cat_label = row[curr_idx]
                     feats_row.append(cat_dict[cat_label])

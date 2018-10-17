@@ -40,17 +40,17 @@ class SimpleFC:
 
     def network(self, inp):
 
-        weights_1 = weight_variable([self.in_size, 128])
-        bias_1 = bias_variable([128])
+        weights_1 = weight_variable([self.in_size, 256])
+        bias_1 = bias_variable([256])
 
         fc_1 = tf.nn.relu(tf.matmul(inp, weights_1) + bias_1)
 
-        weights_2 = weight_variable([128, 64])
-        bias_2 = bias_variable([64])
+        weights_2 = weight_variable([256, 128])
+        bias_2 = bias_variable([128])
 
         fc_2 = tf.nn.relu(tf.matmul(fc_1, weights_2) + bias_2)
 
-        weights_3 = weight_variable([64, 7])
+        weights_3 = weight_variable([128, 7])
 
         logits = tf.matmul(fc_2, weights_3)
 

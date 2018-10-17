@@ -7,7 +7,7 @@ from task_1.dataset import Dataset
 from task_1.model import SimpleFC
 
 
-num_epoch = 1000
+num_epoch = 250
 batch_size = 28
 print_step = 1000
 
@@ -18,12 +18,12 @@ y_valid_classes = ds.one_hot_to_dense(y_valid)
 
 x_test = ds.load_test()
 
-num_ex, _ = x_train.shape
+num_ex, num_feats = x_train.shape
 num_steps = num_ex // batch_size
 
 sess = tf.Session()
 
-simple_fc = SimpleFC(in_size=27, out_size=7)
+simple_fc = SimpleFC(in_size=num_feats, out_size=7)
 simple_fc.build_model()
 
 init = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
