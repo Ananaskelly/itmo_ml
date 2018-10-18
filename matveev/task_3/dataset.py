@@ -34,8 +34,8 @@ class Dataset:
         all_ex = np.stack(all_ex)
         all_labels = np.stack(all_labels)
 
-        all_ex = self.normalize(all_ex)
-        all_labels = self.dense_to_one_hot(all_labels, self.num_classes)
+        # all_ex = self.normalize(all_ex)
+        # all_labels = self.dense_to_one_hot(all_labels, self.num_classes)
 
         return all_ex, all_labels
 
@@ -50,7 +50,7 @@ class Dataset:
 
         bound_idx = int(num_ex * (1 - self.test_part))
 
-        return x[:bound_idx, :], y[:bound_idx, :], x[bound_idx:, :], y[bound_idx:, :]
+        return x[:bound_idx, :], y[:bound_idx], x[bound_idx:, :], y[bound_idx:]
 
     def normalize(self, data):
         return data * 1/256
