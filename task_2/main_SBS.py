@@ -6,7 +6,8 @@ from task_2.SBS import SBS
 from task_2.GeneticAlg import GeneticAlg
 from task_2.SVM import SVM
 from task_2.KNN import KNN
-from task_2.RF import RF as CLF
+from task_2.RF import RF
+from task_2.XGBOOST import XGBOOST
 
 
 if __name__ == '__main__':
@@ -14,7 +15,7 @@ if __name__ == '__main__':
     ds = Dataset()
     ds.create_ds()
 
-    sbsEngine = SBS(clf=KNN, dataset=ds)
+    sbsEngine = SBS(clf=XGBOOST, dataset=ds)
 
     sbsEngine.add_new_feature()
 

@@ -30,7 +30,6 @@ class SBS:
 
             v_data, v_labels = self.dataset.get_subset_set(curr_ids, 'valid')
             scores.append(self.clf.check_accuracy(v_data, v_labels))
-
         scores = np.array(scores)
 
         self.last_score = self.current_score
