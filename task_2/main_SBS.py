@@ -19,7 +19,8 @@ if __name__ == '__main__':
     sbsEngine.add_new_feature()
 
     while not sbsEngine.check_stopping_crit():
-        current_score = sbsEngine.add_new_feature()
-        print('Current score: {}'.format(current_score))
+        current_score, selected_ids = sbsEngine.add_new_feature()
+        print('Current score: {}, ids: {}'.format(current_score, selected_ids))
 
-    print('Selected features number: {}'.format(len(sbsEngine.selected_ids)))
+    print('Selected features number: {}, ids: {}'.format(sbsEngine.get_selected_features_num(),
+                                                         sbsEngine.get_final_feats()))

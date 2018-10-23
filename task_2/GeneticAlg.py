@@ -3,7 +3,7 @@ import numpy as np
 
 class GeneticAlg:
 
-    def __init__(self, full_range, subset_size=75, population_size=200, mutable=True, iter=1000, crossover_cf=0.3,
+    def __init__(self, full_range, subset_size=8, population_size=1000, mutable=True, iter=1000, crossover_cf=0.3,
                  mt_coeff1=0.05, mt_coeff2=0.3):
 
         self.full_range = full_range

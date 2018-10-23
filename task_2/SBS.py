@@ -3,7 +3,7 @@ import numpy as np
 
 class SBS:
 
-    def __init__(self, clf, dataset, stop_crit_it=3):
+    def __init__(self, clf, dataset, stop_crit_it=5):
 
         self.stop_crit_it = stop_crit_it
         self.clf = clf()
@@ -44,11 +44,11 @@ class SBS:
 
         self.current_it += 1
 
-        return self.current_score
+        return self.current_score, self.selected_ids
 
     def check_stopping_crit(self):
 
-        if self.last_score > self.current_score:
+        if self.last_score >= self.current_score:
             if self.last_f_it != -1:
                 if self.current_it - self.last_f_it >= self.stop_crit_it:
                     return True
@@ -58,3 +58,16 @@ class SBS:
             self.last_f_it = -1
 
         return False
+
+    def get_selected_features_num(self):
+
+        if self.last_f_it != -1:
+            return self.last_f_it + 1
+        else:
+            return self.current_it + 1
+
+    def get_final_feats(self):
+        if self.last_f_it != 1:
+            return self.selected_ids[:-self.stop_crit_it]
+        else:
+            return self.selected_ids
