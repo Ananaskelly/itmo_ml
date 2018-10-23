@@ -1,5 +1,6 @@
 import os
 import numpy as np
+from sklearn.decomposition import PCA
 
 
 ROOT_PATH = '../data/'
@@ -24,7 +25,7 @@ class Dataset:
         self.all_ex = None
         self.all_labels = None
 
-    def create_ds(self):
+    def create_ds(self, pca=False):
 
         train_data = []
         with open(os.path.join(ROOT_PATH, TR_DATA), 'r') as train_data_file:
@@ -34,8 +35,6 @@ class Dataset:
                 train_data.append(self.line2array(line))
 
             train_data = np.array(train_data)
-
-        self.train_ex, self.feats_num = train_data.shape
 
         train_labels = []
         with open(os.path.join(ROOT_PATH, TR_LABELS), 'r') as train_labels_file:
@@ -48,10 +47,18 @@ class Dataset:
 
         assert train_data.shape[0] == train_labels.shape[0], 'Number of train examples and labels must be equal!'
 
-        self.train_set = {
-            'data': train_data,
-            'labels': train_labels
-        }
+        if pca:
+            self.train_set = {
+                'data': self.pca(self.normalize_along_axis(train_data)),
+                'labels': train_labels
+            }
+        else:
+            self.train_set = {
+                'data': self.normalize_along_axis(train_data),
+                'labels': train_labels
+            }
+
+        self.train_ex, self.feats_num = self.train_set['data'].shape
 
         valid_data = []
         with open(os.path.join(ROOT_PATH, VALID_DATA), 'r') as valid_data_file:
@@ -73,10 +80,32 @@ class Dataset:
 
         assert valid_data.shape[0] == valid_labels.shape[0], 'Number of train examples and labels must be equal!'
 
-        self.valid_set = {
-            'data': valid_data,
-            'labels': valid_labels
-        }
+        if pca:
+            self.valid_set = {
+                'data': self.pca(self.normalize_along_axis(valid_data)),
+                'labels': valid_labels
+            }
+        else:
+            self.valid_set = {
+                'data': self.normalize_along_axis(valid_data),
+                'labels': valid_labels
+            }
+
+    @staticmethod
+    def normalize_along_axis(data):
+
+        min_ = np.min(data, axis=0)
+        max_ = np.max(data, axis=0)
+
+        diff = np.where(max_ - min_ != 0, max_ - min_, 1)
+
+        return (data - min_)/diff
+
+    @staticmethod
+    def pca(data):
+        pca = PCA()
+        data = pca.fit_transform(data)
+        return data
 
     def line2array(self, line, delimiter=' '):
         line = line.strip('\n ')
