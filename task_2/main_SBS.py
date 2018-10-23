@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     sbsEngine.add_new_feature()
 
-    while not sbsEngine.stop_crit_it():
+    while not sbsEngine.check_stopping_crit():
         current_score = sbsEngine.add_new_feature()
         print('Current score: {}'.format(current_score))
 
