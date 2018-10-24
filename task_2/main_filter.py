@@ -5,6 +5,8 @@ from task_2.dataset import Dataset
 from task_2.correlation_filter import CorrelationFilter
 from task_2.SVM import SVM
 
+from sklearn.svm import LinearSVC
+from sklearn.metrics import accuracy_score as asc
 
 if __name__ == '__main__':
 
@@ -13,8 +15,7 @@ if __name__ == '__main__':
 
     filterEngine = CorrelationFilter()
 
-    selected_ids = filterEngine.fit_data(ds.train_set['data'])
-    print(selected_ids)
+    selected_ids = filterEngine.fit_data(ds.train_set['data'])[0]
 
     # test performance
     data, labels = ds.get_subset_set(selected_ids, 'train')
