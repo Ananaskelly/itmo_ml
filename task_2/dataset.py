@@ -16,6 +16,9 @@ class Dataset:
         self.train_set = None
         self.valid_set = None
 
+        self.nn_train_set = None
+        self.nn_valid_set = None
+
         self.train_ex = 0
         self.feats_num = 0
 
@@ -58,6 +61,11 @@ class Dataset:
                 'labels': train_labels
             }
 
+        self.nn_train_set = {
+            'data': train_data,
+            'labels': train_labels
+        }
+
         self.train_ex, self.feats_num = self.train_set['data'].shape
 
         valid_data = []
@@ -76,7 +84,7 @@ class Dataset:
             for line in lines:
                 valid_labels.append(float(line.strip('\n')))
 
-            valid_labels = np.array(train_labels)
+            valid_labels = np.array(valid_labels)
 
         assert valid_data.shape[0] == valid_labels.shape[0], 'Number of train examples and labels must be equal!'
 
@@ -90,6 +98,10 @@ class Dataset:
                 'data': self.normalize_along_axis(valid_data),
                 'labels': valid_labels
             }
+        self.nn_valid_set = {
+            'data': valid_data,
+            'labels': valid_labels
+        }
 
     @staticmethod
     def normalize_along_axis(data):
@@ -97,7 +109,8 @@ class Dataset:
         min_ = np.min(data, axis=0)
         max_ = np.max(data, axis=0)
 
-        diff = np.where(max_ - min_ != 0, max_ - min_, 1)
+        diff = np.where(max_ - min_ != 0, max_ - min_, max_)
+        diff = np.where(diff == 0, 1, diff)
 
         return (data - min_)/diff
 
