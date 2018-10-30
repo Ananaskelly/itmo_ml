@@ -1,12 +1,17 @@
-import numpy as np
-
-
-from task_2.dataset import Dataset
+from task_2.classifiers.SVM import SVM
 from task_2.correlation_filter import CorrelationFilter
-from task_2.SVM import SVM
+from task_2.dataset import Dataset
 
-from sklearn.svm import LinearSVC
-from sklearn.metrics import accuracy_score as asc
+'''
+    Filters for feature selection.
+
+    - Correlation filter correlation_filter.py
+        Смотрим попарные корреляции признаков, если корреляция выше порога - выкидываем признак.
+        Result:
+        Accuracy: 0.65, selected ids num: 2587
+
+'''
+
 
 if __name__ == '__main__':
 
@@ -24,4 +29,5 @@ if __name__ == '__main__':
 
     svmEngine.fit(data, labels)
 
-    print('Accuracy: {}, selected ids: {}'.format(svmEngine.check_accuracy(valid_data, valid_labels), selected_ids))
+    print('Accuracy: {}, selected ids num: {}'.format(svmEngine.check_accuracy(valid_data, valid_labels),
+                                                      len(selected_ids)))
