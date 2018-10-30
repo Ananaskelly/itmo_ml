@@ -8,6 +8,25 @@ from task_2.KNN import KNN
 from task_2.RF import RF as CLF
 
 
+'''
+    Генетический алгоритм для задачи feature selection
+
+    logs:
+
+    [ 0.81  0.81  0.81  0.8   0.8   0.79  0.79  0.78  0.78  0.77]
+    [ 0.84  0.82  0.82  0.8   0.8   0.8   0.8   0.8   0.78  0.78]
+    [ 0.84  0.83  0.82  0.82  0.82  0.81  0.81  0.81  0.81  0.8 ]
+    [ 0.85  0.84  0.83  0.83  0.83  0.82  0.82  0.82  0.82  0.82]
+    [ 0.86  0.86  0.85  0.84  0.84  0.84  0.83  0.82  0.82  0.82]
+    [ 0.89  0.87  0.84  0.84  0.84  0.84  0.84  0.83  0.83  0.83]
+    [ 0.89  0.87  0.86  0.86  0.84  0.83  0.83  0.83  0.83  0.83]
+    [ 0.91  0.87  0.86  0.85  0.85  0.85  0.84  0.83  0.83  0.83]
+    [ 0.9   0.89  0.87  0.85  0.84  0.84  0.84  0.83  0.83  0.83]
+    [ 0.86  0.86  0.86  0.85  0.84  0.83  0.83  0.83  0.83  0.83]
+
+'''
+
+
 if __name__ == '__main__':
 
     ds = Dataset()
@@ -16,9 +35,7 @@ if __name__ == '__main__':
     algEngine = GeneticAlg(full_range=ds.feats_num)
     algEngine.gen_first_generation()
 
-    clfEngine = CLF()
-
-    num_it = 1000
+    num_it = 50
 
     for i in range(num_it):
         ids_subsets = algEngine.current_generation
@@ -28,6 +45,7 @@ if __name__ == '__main__':
         for ids_subset in ids_subsets:
 
             data, labels = ds.get_subset_set(ids_subset)
+            clfEngine = CLF()
             clfEngine.fit(data, labels)
 
             valid_data, valid_labels = ds.get_subset_set(ids_subset, data_type='valid')
