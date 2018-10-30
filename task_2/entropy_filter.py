@@ -25,24 +25,26 @@ class EntropyFilter:
         return np.array(IG_vals)
 
     def calc_cond_entropy(self, y, x):
-
         res = 0
-        _, probs, uniq_vals = self.calc_entropy(x)
-
+        probs, uniq_vals = self.get_probs(x)
         for i, val in enumerate(uniq_vals):
-            tmp_y = y[x == val].astype(float)
-            # print(tmp_y.shape)
-            res += probs[i] * self.calc_entropy(tmp_y)[0]
+            curr_y = y[x == val].astype(float)
+            res += probs[i] * self.calc_entropy(curr_y)
 
         return res
 
-    def calc_entropy(self, x):
+    def get_probs(self, x):
         un_val, counts = np.unique(x, return_counts=True)
         prb = counts / x.shape[0]
+
+        return prb, un_val
+
+    def calc_entropy(self, x):
+        prb, un_val = self.get_probs(x)
         entropy = -np.sum(prb * np.log2(prb))
-        return entropy, prb, un_val
+        return entropy
 
     def IG(self, y, x):
-        H, _, _ = self.calc_entropy(y)
+        H = self.calc_entropy(y)
         H_cond = self.calc_cond_entropy(y, x)
         return H - H_cond
