@@ -1,14 +1,7 @@
-import numpy as np
-
-
-from task_2.dataset import Dataset
-from task_2.SBS import SBS
-from task_2.GeneticAlg import GeneticAlg
-from task_2.SVM import SVM
-from task_2.KNN import KNN
-from task_2.RF import RF
 from task_2.XGBOOST import XGBOOST
 
+from task_2.SBS import SBS
+from task_2.dataset import Dataset
 
 if __name__ == '__main__':
 

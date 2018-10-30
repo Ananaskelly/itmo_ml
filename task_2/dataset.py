@@ -44,7 +44,7 @@ class Dataset:
             lines = train_labels_file.readlines()
 
             for line in lines:
-                train_labels.append(float(line.strip('\n')))
+                train_labels.append(int(line.strip('\n')))
 
             train_labels = np.array(train_labels)
 
@@ -82,7 +82,7 @@ class Dataset:
             lines = valid_labels_file.readlines()
 
             for line in lines:
-                valid_labels.append(float(line.strip('\n')))
+                valid_labels.append(int(line.strip('\n')))
 
             valid_labels = np.array(valid_labels)
 
@@ -98,6 +98,11 @@ class Dataset:
                 'data': self.normalize_along_axis(valid_data),
                 'labels': valid_labels
             }
+        self.nn_valid_set = {
+            'data': valid_data,
+            'labels': valid_labels
+        }
+
         self.nn_valid_set = {
             'data': valid_data,
             'labels': valid_labels
@@ -126,7 +131,7 @@ class Dataset:
 
         arr = np.zeros(shape=len(symbs))
         for i, s in enumerate(symbs):
-            arr[i] = float(s)
+            arr[i] = int(s)
 
         return arr
 

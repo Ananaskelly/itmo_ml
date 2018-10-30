@@ -1,11 +1,8 @@
 import numpy as np
 
-
-from task_2.dataset import Dataset
 from task_2.GeneticAlg import GeneticAlg
-from task_2.SVM import SVM
-from task_2.KNN import KNN
-from task_2.RF import RF as CLF
+from task_2.classifiers.RF import RF as CLF
+from task_2.dataset import Dataset
 
 
 '''
