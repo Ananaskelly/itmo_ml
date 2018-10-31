@@ -45,6 +45,6 @@ class EntropyFilter:
         return entropy
 
     def IG(self, y, x):
-        H = self.calc_entropy(y)
-        H_cond = self.calc_cond_entropy(y, x)
+        H = self.calc_entropy(x)
+        H_cond = self.calc_cond_entropy(x, y)
         return H - H_cond
