@@ -5,7 +5,7 @@ import numpy as np
 A = 10
 """
     Random search:
-        Found minimum 0.001072436878928329 at point: [0.0007914934126316275, -0.0021861513251395515]
+        Found minimum 0.057947588885156165 at point: [0.005904906746808436, 0.01604490908983891]
 
 
 """
@@ -23,7 +23,7 @@ def run_random_search():
 
     search_engine = RandomSearch(rastrigin)
 
-    bound = [-0.5, 0.5]
+    bound = [-5.12, 5.12]
     n = 2
     bound_arr = np.tile(bound, (n, 1))
 
