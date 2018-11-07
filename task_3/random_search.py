@@ -12,16 +12,18 @@ class RandomSearch:
         best_vals = np.zeros(num_v)
         best_f = None
 
+        found_vals = []
+        best_y = []
+
         for i in range(max_iter):
             curr_v = [np.random.uniform(var_bounds[j, 0], var_bounds[j, 1]) for j in range(num_v)]
 
             f_v = self.obj_func(curr_v)
+            found_vals.append(f_v)
             if best_f is None or best_f > f_v:
                 best_f = f_v
                 best_vals = curr_v
 
-        return best_f, best_vals
+            best_y.append(best_f)
 
-
-
-
+        return best_f, best_vals, found_vals, best_y
