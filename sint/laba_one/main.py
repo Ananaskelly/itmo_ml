@@ -16,7 +16,7 @@ logger.addHandler(ch)
 
 root_path = '../../data/'
 file_name = 'subparts.xml'
-ds = Dataset(os.path.join(root_path, file_name), 12)
+ds = Dataset(os.path.join(root_path, file_name))
 ds.create_ds(use_th_gr=True)
 
 logger.info(msg='Dataset loaded!')

@@ -4,9 +4,8 @@ from xml.etree import ElementTree
 
 class Dataset:
 
-    def __init__(self, path_to_in_xml, num_cls, valid_part=0.1, test_part=0.1):
+    def __init__(self, path_to_in_xml, valid_part=0.1, test_part=0.1):
         self._path_to_in_xml = path_to_in_xml
-        # self._num_cls = num_cls
 
         self._test_set = {}
         self._valid_set = {}
