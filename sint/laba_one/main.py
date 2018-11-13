@@ -3,6 +3,7 @@ import logging
 from sint.laba_one.dataset import Dataset
 
 from task_2.classifiers.XGBOOST import XGBOOST
+from task_2.classifiers.RF2 import RF
 
 logger = logging.getLogger('laba_one')
 logger.setLevel(logging.DEBUG)
@@ -15,8 +16,8 @@ logger.addHandler(ch)
 
 root_path = '../../data/'
 file_name = 'subparts.xml'
-ds = Dataset(os.path.join(root_path, file_name), 14)
-ds.create_ds()
+ds = Dataset(os.path.join(root_path, file_name), 12)
+ds.create_ds(use_th_gr=True)
 
 logger.info(msg='Dataset loaded!')
 
@@ -29,7 +30,11 @@ logger.info(msg='Size of train set: {}, size of features in train set: {}'.forma
 xgboostEngine = XGBOOST()
 xgboostEngine.fit(x, y)
 
+rfEngine = RF()
+rfEngine.fit(x, y)
+
 score = xgboostEngine.check_accuracy(x_test, y_test)
+score_rf = rfEngine.check_accuracy(x_test, y_test)
 
 logger.info(msg='Score on test set: {}'.format(score))
-
+logger.info(msg='Score_rf on test set: {}'.format(score_rf))
