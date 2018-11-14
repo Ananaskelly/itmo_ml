@@ -10,7 +10,7 @@ class BaseDataset:
         self._valid_part = valid_part
         self._test_part = test_part
 
-        self._sym_dict = {':': 1, ',': 2, '.': 3, '!': 4, '?': 5}
+        self._sym_dict = {':': 1, ',': 2, '.': 3, '!': 4, '?': 5, ';': 6, '-': 7}
         self._sym_keys = self._sym_dict.keys()
 
     @property
