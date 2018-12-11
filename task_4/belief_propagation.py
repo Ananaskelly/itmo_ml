@@ -16,11 +16,11 @@ if __name__ == '__main__':
     p = Parser(file_name=file_name)
     bn = p.parse_file()
     factors = []
-    for nodes in bn:
-        if not nodes.is_root():
-            temp_array = [nodes]
-            temp_array.extend(nodes.get_parents())
-            factors.append(Factor(nodes.get_dist(), temp_array))
+    for node in bn:
+        if not node.is_root():
+            temp_array = [node]
+            temp_array.extend(node.get_parents())
+            factors.append(Factor(node.get_dist(), temp_array))
 
     converged = False
     conver_num = 0

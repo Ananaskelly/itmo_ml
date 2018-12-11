@@ -101,7 +101,7 @@ class Node:
 
             for key in vals.keys():
                 if the_sum != 0:
-                    vals[key] = vals[key] /the_sum
+                    vals[key] = vals[key] / the_sum
             self.marginal = vals
 
     def get_marginal(self):

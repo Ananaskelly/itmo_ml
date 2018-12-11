@@ -50,8 +50,3 @@ class Factor:
                 sum_over = copy.deepcopy(temp_dict)
             j -= 1
         return sum_over
-
-    def print_factor(self):
-        print("Fields: ")
-        for a in self.fields:
-            print(a.get_name())
