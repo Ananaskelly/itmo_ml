@@ -1,47 +1,49 @@
 import numpy as np
 from xml.etree import ElementTree
+from sint.base_dataset import BaseDataset
 
 
-class Dataset:
+class Dataset(BaseDataset):
 
     def __init__(self, path_to_in_xml, valid_part=0.1, test_part=0.1):
-        self._path_to_in_xml = path_to_in_xml
+        super(Dataset, self).__init__(path_to_in_xml, valid_part=valid_part, test_part=test_part)
+        self.int_dict = {
+            '0': 0,
+            '11': 1,
+            '30': 2,
+            '40': 3,
+            '50': 4,
+            '70': 5,
+            '110': 6
+        }
 
-        self._test_set = {}
-        self._valid_set = {}
-        self._train_set = {}
-
-        self._valid_part = valid_part
-        self._test_part = test_part
-
-        self._sym_dict = {':': 1, ',': 2, '.': 3, '!': 4, '?': 5}
-        self._sym_keys = self._sym_dict.keys()
-
-    @property
-    def test_set(self):
-        return self._test_set
-
-    @property
-    def valid_set(self):
-        return self._valid_set
-
-    @property
-    def train_set(self):
-        return self._train_set
-
-    def parse_xml(self):
+    def parse_xml(self, return_intonation=False):
         tree_root = ElementTree.parse(self._path_to_in_xml).getroot()
 
         word_tags = []
+        intonation_class = []
         content_tags = []
 
         word_ids = []
         for sentence in tree_root.iter('sentence'):
+            # sentence_words = sentence.findall('word')
+            tags_count = len(sentence)
+            words_count = 0
+            for idx in range(tags_count):
+                if sentence[idx].tag == 'word':
+                    word_ids.append(words_count)
+                    words_count += 1
+                    word_tags.append(sentence[idx])
+                    if idx != tags_count-1:
+                        if sentence[idx+1].tag == 'intonation':
+                            intonation_class.append(sentence[idx+1].get('type'))
+                        else:
+                            intonation_class.append('0')
+                    else:
+                        intonation_class.append('0')
 
-            sentence_words = sentence.findall('word')
-            for idx, word in enumerate(sentence_words):
-                word_ids.append(idx)
-                word_tags.append(word)
+        intonation_class = list(map(lambda x: self.int_dict[x], intonation_class))
+        intonation_class = np.array(intonation_class).astype(np.int)
 
         for content in tree_root.iter('content'):
             content_tags.append(content)
@@ -55,14 +57,21 @@ class Dataset:
             if _word is not None:
                 words.append(_word)
                 attr['class'] = word.find('dictitem').get('subpart_of_speech')
-                p_end = content_tags[idx+1].get('PunktEnd')
-                if p_end is not None:
-                    attr['punkt_end'] = int(p_end)
+
+                if idx+1 < len(content_tags):
+                    p_end = content_tags[idx+1].get('PunktEnd')
+                    if p_end is not None:
+                        attr['punkt_end'] = int(p_end)
+                    else:
+                        attr['punkt_end'] = 0
                 else:
                     attr['punkt_end'] = 0
                 attr['pos'] = word_ids[idx]
 
                 attrs.append(attr)
+
+        if return_intonation:
+            return words, attrs, intonation_class
 
         return words, attrs
 
