@@ -2,7 +2,7 @@ from task_4.parser import Parser
 from itertools import product
 
 
-def element_wise_equal(a, b):
+def is_equal(a, b):
     for i in range(0, len(a)):
         if a[i] != b[i]:
             return False
@@ -20,13 +20,13 @@ def get_dist_element(node, value, args_list):
         else:
             conditions = []
             values = key
-        if element_wise_equal(conditions, args):
+        if is_equal(conditions, args):
             index = values.index(value)
             return node.dist[key][index]
     raise Exception('Unknown args: ' + str(args))
 
 
-def get_marginal_dist(args):
+def get_marg(args):
     argument_ranges = []
     for node in nodes:
         if node.name in args:
@@ -46,7 +46,7 @@ def get_marginal_dist(args):
 
 if __name__ == '__main__':
 
-    parser = Parser('../data/asia.bif')
+    parser = Parser('../data/cancer.bif')
     nodes = parser.parse_file()
 
     line = input()
@@ -57,4 +57,4 @@ if __name__ == '__main__':
             continue
         pp = part.strip().split('=')
         args[pp[0]] = pp[1]
-    print(get_marginal_dist(args))
+    print(get_marg(args))

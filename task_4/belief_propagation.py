@@ -12,7 +12,7 @@ def part_of(node, factor):
     return False
 
 if __name__ == '__main__':
-    file_name = '../data/asia.bif'
+    file_name = '../data/cancer.bif'
     p = Parser(file_name=file_name)
     bn = p.parse_file()
     factors = []

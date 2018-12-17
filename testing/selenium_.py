@@ -6,9 +6,46 @@ import time
 driver = webdriver.Chrome(
         executable_path='../driver/chromedriver.exe'
     )
-driver.get("https://www.ok.ru/")
+
+driver.get("https://www.onlinetours.ru/")
+
+time.sleep(3)
+
+element = driver.find_element_by_class_name('search-form__field')
+
+element2 = element.find_element_by_tag_name('input')
+element2.send_keys('Крым')
+
+#elem_find = driver.find_element_by_class_name("search-form__submit-button-state")
+elem_find = driver.find_element_by_xpath('/html/body/div[2]/article/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div[5]/a/div[2]')
+elem_find.click()
+time.sleep(2)
+elem_days = driver.find_element_by_xpath('/html/body/div[2]/article/div[1]/div/div[2]/div/div[1]/div/div[2]/div[2]/div/div[1]/div[1]/div[2]/div[4]/div')
+elem_days.click()
+time.sleep(2)
+elem_days2 = driver.find_element_by_xpath('/html/body/div[2]/article/div[1]/div/div[2]/div/div[1]/div/div[2]/div[2]/div/div[1]/div[1]/div[2]/div[8]/div')
+elem_days2.click()
+time.sleep(2)
+day1 = '/html/body/div[2]/article/div[1]/div/div[2]/div/div[1]/div/div[2]/div[2]/div/div[1]/div[2]/div[2]/div[3]/div/div[2]/div[5]/div[2]/div'
+day2 = '/html/body/div[2]/article/div[1]/div/div[2]/div/div[1]/div/div[2]/div[2]/div/div[1]/div[2]/div[2]/div[3]/div/div[3]/div[4]/div[3]/div'
+
+#elem_day = driver.find_element_by_xpath(day1)
+#elem_day.click()
+
+elem_day2 = driver.find_element_by_xpath(day2)
+elem_day2.click()
+
+time.sleep(2)
+elem_find.click()
+
+#time.sleep(1)
+#elem_find.click()
 
 
+
+
+
+#driver.close()
 def test_title():
     if driver.title == 'OK.RU':
         print('Title test passed.')
@@ -16,6 +53,7 @@ def test_title():
         print('Actual title is {}'.format(driver.title))
 
 
+'''
 def test_user_login():
     login_field = driver.find_element_by_id("field_email")
     login_field.send_keys("89102272132")
@@ -110,3 +148,4 @@ test_user_login()
 test_posting()
 test_deleting()
 
+'''
