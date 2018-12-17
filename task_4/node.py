@@ -1,17 +1,4 @@
-'''
-This is a class that implements a node in a Bayesian network. 
 
-The distribution field is a dictionary containing the conditional probability distribution of the node given its parents.
-The keys to the dictionary are tuples containing the names of the possible states of the node and the evidence of the parents
-for each line in the CPD table. If a node has no parents, the distribution will store the marginal distribution.
-
-This is my implementation for a node. Feel free to alter it based on your own design for what a node should look like.
-If you change the node constructor parameters, however, remember to change the BIF parse script so that the number of variables
-received by the constructor is the same as the number of variables given to the constructor. 
-
-'''
-
-# node py
 
 class Node:
     def __init__(self, name, node_type, n_states, states, the_property):

@@ -12,7 +12,6 @@ class CorrelationFilter:
         pd_data_fr = pd.DataFrame(data=data)
 
         data_corr = pd_data_fr.corr()
-
         ids = np.full(shape=data_corr.shape[0], fill_value=True, dtype=bool)
         for i in range(data_corr.shape[0]):
             for j in range(i + 1, data_corr.shape[0]):
