@@ -28,8 +28,8 @@ class StyleTransferModel:
         content_image = load_and_process_img(content_path)
         style_image = load_and_process_img(style_path)
 
-        style_outputs = model(style_image)
-        content_outputs = model(content_image)
+        style_outputs = model(tf.convert_to_tensor(style_image))
+        content_outputs = model(tf.convert_to_tensor(content_image))
 
         style_features = [style_layer[0] for style_layer in style_outputs[:VGGModel.get_num_style_layers()]]
         content_features = [content_layer[0] for content_layer in content_outputs[VGGModel.get_num_style_layers():]]
@@ -99,7 +99,8 @@ class StyleTransferModel:
 
         num_rows = 2
         num_cols = 5
-        display_interval = num_iterations / (num_rows * num_cols)
+        # display_interval = num_iterations / (num_rows * num_cols)
+        display_interval = 10
 
         norm_means = np.array([103.939, 116.779, 123.68])
         min_vals = -norm_means
